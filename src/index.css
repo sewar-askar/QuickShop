@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.fixed-dimensions {
+  max-height: 600px;
+  object-fit: cover;
+}
+.best-sellers-gallery {
+  margin-bottom: 20px;
+}
+
+
+
+.image-gallery-description {
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #333;
+  text-align: center;
+}
+
