@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
@@ -7,6 +7,7 @@ import { CartContext } from "../context/CartContext";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
+import { FaShoppingCart, FaStar } from "react-icons/fa";
 
 function ProductDetailsPage() {
   const { t } = useTranslation();
@@ -33,15 +34,15 @@ function ProductDetailsPage() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <ClipLoader color="#fff" size={50} />
+      <div className="flex justify-center items-center h-screen">
+        <ClipLoader color="#4B5563" size={60} />
       </div>
     );
   }
 
   const addToCart = () => {
     setCart((prevCart) => [...prevCart, product]);
-    toast.success(t("add_to_cart"));
+    toast.success(t("add_to_cart_success"));
   };
 
   const structuredData = {
@@ -62,10 +63,10 @@ function ProductDetailsPage() {
 
   return (
     <motion.div
-      className="container px-16 mx-auto mt-12"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+      className="container mx-auto px-4 py-8 max-w-6xl"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
     >
       <Helmet>
         <title>{product.title} - QuickShop</title>
@@ -77,33 +78,61 @@ function ProductDetailsPage() {
           {JSON.stringify(structuredData)}
         </script>
       </Helmet>
-      <div
-        className="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col md:flex-row items-center md:items-start"
-        aria-labelledby="product-details"
-      >
-        <img
-          src={product.image}
-          alt={product.title}
-          className="w-full md:w-1/2 max-h-80 object-contain mb-6 md:mb-0 rounded-lg"
-          loading="lazy"
-        />
-        <div className="md:ml-8 flex flex-col items-center md:items-start">
-          <h2 className="text-3xl font-bold mb-4" id="product-details">
-            {product.title}
-          </h2>
-          <p className="text-2xl font-bold mb-4 text-gray-600">
-            ${product.price}
-          </p>
-          <p className="text-lg mb-6 text-gray-400 text-center md:text-left">
-            {product.description}
-          </p>
-          <div className="flex space-x-4">
-            <button
-              className="bg-white border border-black text-black px-6 py-2 rounded-lg hover:bg-black hover:text-white"
-              onClick={addToCart}
+      <div className="bg-white shadow-xl rounded-lg overflow-hidden">
+        <div className="md:flex">
+          <div className="md:flex-shrink-0 bg-gray-100 p-8 flex items-center justify-center">
+            <motion.img
+              src={product.image}
+              alt={product.title}
+              className="w-full h-64 object-contain md:w-96 md:h-96"
+              loading="lazy"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            />
+          </div>
+          <div className="p-8">
+            <motion.h2
+              className="text-3xl font-bold text-gray-800 mb-4"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
             >
+              {product.title}
+            </motion.h2>
+            <motion.div
+              className="flex items-center mb-4"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <span className="text-3xl font-bold text-indigo-600">
+                ${product.price.toFixed(2)}
+              </span>
+              <div className="ml-4 flex items-center">
+                {[...Array(5)].map((_, i) => (
+                  <FaStar key={i} className="text-yellow-400 mr-1" />
+                ))}
+                <span className="text-gray-600 ml-2">(4.5)</span>
+              </div>
+            </motion.div>
+            <motion.p
+              className="text-gray-600 mb-8 leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
+              {product.description}
+            </motion.p>
+            <motion.button
+              className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center w-full md:w-auto"
+              onClick={addToCart}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaShoppingCart className="mr-2" />
               {t("add_to_cart")}
-            </button>
+            </motion.button>
           </div>
         </div>
       </div>

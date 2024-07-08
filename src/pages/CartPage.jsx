@@ -4,6 +4,7 @@ import { CartContext } from "../context/CartContext";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
+import { FaShoppingCart, FaTimes, FaChevronRight } from "react-icons/fa";
 
 function CartPage() {
   const { t } = useTranslation();
@@ -14,12 +15,22 @@ function CartPage() {
     toast.success(t("remove"));
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.5 } },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
     <motion.div
-      className="container px-16 mx-auto mt-12"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+      className="container mx-auto px-4 sm:px-6 lg:px-8 py-12"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
     >
       <Helmet>
         <title>{t("cart")}</title>
@@ -28,34 +39,65 @@ function CartPage() {
           content="Review your cart items and proceed to checkout."
         />
       </Helmet>
-      <h2 className="text-3xl font-bold mb-8">{t("your_cart")}</h2>
+
+      <div className="flex items-center justify-between mb-8">
+        <h2 className="text-3xl font-bold text-gray-900">{t("your_cart")}</h2>
+        <FaShoppingCart className="w-8 h-8 text-gray-600" />
+      </div>
+
       {cart.length === 0 ? (
-        <p className="text-lg">{t("empty_cart")}</p>
+        <motion.p
+          className="text-xl text-gray-600 text-center py-12"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          {t("empty_cart")}
+        </motion.p>
       ) : (
-        <div className="bg-white p-6 rounded-lg shadow-lg">
-          {cart.map((item, index) => (
-            <div key={index} className="flex justify-between items-center mb-6">
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-20 h-20 object-cover rounded-lg"
-                loading="lazy"
-              />
-              <p className="text-lg flex-1 ml-4">{item.title}</p>
-              <p className="text-lg">${item.price}</p>
-              <button
-                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 ml-4"
-                onClick={() => removeFromCart(index)}
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div className="divide-y divide-gray-200">
+            {cart.map((item, index) => (
+              <motion.div
+                key={index}
+                className="flex items-center p-6 space-x-4"
+                variants={itemVariants}
+                initial="hidden"
+                animate="visible"
+                transition={{ delay: index * 0.1 }}
               >
-                {t("remove")}
-              </button>
-            </div>
-          ))}
-          <div className="flex justify-end mt-6">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-24 h-24 object-cover rounded-lg shadow-md"
+                  loading="lazy"
+                />
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-600">${item.price}</p>
+                </div>
+                <button
+                  className="p-2 text-red-600 hover:bg-red-100 rounded-full transition-colors duration-200"
+                  onClick={() => removeFromCart(index)}
+                  aria-label={t("remove")}
+                >
+                  <FaTimes className="w-6 h-6" />
+                </button>
+              </motion.div>
+            ))}
+          </div>
+          <div className="p-6 bg-gray-50">
             <Link to="/checkout">
-              <button className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 text-lg">
-                {t("proceed_checkout")}
-              </button>
+              <motion.button
+                className="w-full flex items-center justify-center space-x-2 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors duration-200 text-lg font-semibold"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span>{t("proceed_checkout")}</span>
+                <FaChevronRight className="w-5 h-5" />
+              </motion.button>
             </Link>
           </div>
         </div>
@@ -63,4 +105,5 @@ function CartPage() {
     </motion.div>
   );
 }
+
 export default CartPage;

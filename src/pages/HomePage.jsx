@@ -20,7 +20,7 @@ function HomePage() {
         <title>QuickShop - {t("home")}</title>
         <meta
           name="description"
-          content="Discover amazing products at great prices on QuickShop's homepage!"
+          content="Discover amazing products at great prices on QuickShop's !"
         />
       </Helmet>
       <h1 className="text-5xl font-bold mb-6">{t("welcome")}</h1>
