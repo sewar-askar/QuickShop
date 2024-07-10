@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
 import { FaSearch } from "react-icons/fa";
+import truncateTitle from "../utils/truncateTitle";
 
 function ProductsPage() {
   const { t } = useTranslation();
@@ -169,7 +170,7 @@ function ProductsPage() {
             </motion.div>
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-800">
-                {product.title}
+                {truncateTitle(product.title, 30)}
               </h3>
               <p className="text-2xl font-bold text-blue-600 mb-4">
                 ${product.price}

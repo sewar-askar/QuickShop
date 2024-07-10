@@ -3,10 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
-import ImageGallery from "react-image-gallery";
+import Slider from "react-slick";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import truncateTitle from "../utils/truncateTitle";
+
 function HomePage() {
   const { t } = useTranslation();
   return (
@@ -20,7 +24,7 @@ function HomePage() {
         <title>QuickShop - {t("home")}</title>
         <meta
           name="description"
-          content="Discover amazing products at great prices on QuickShop's !"
+          content="Discover amazing products at great prices on QuickShop's!"
         />
       </Helmet>
       <h1 className="text-5xl font-bold mb-6">{t("welcome")}</h1>
@@ -47,7 +51,7 @@ function BestSellers() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          "https://fakestoreapi.com/products?limit=3"
+          "https://fakestoreapi.com/products?limit=6"
         );
         setProducts(response.data);
         setLoading(false);
@@ -67,44 +71,51 @@ function BestSellers() {
     );
   }
 
-  const images = products.map((product) => ({
-    original: product.image,
-    originalTitle: product.title,
-    originalAlt: product.title,
-    description: `${product.title} - $${product.price}`,
-    originalClass: "fixed-dimensions bg-gray-500 rounded-lg w-full",
-    loading: "lazy",
-    productId: product.id,
-  }));
-
-  const renderItem = (item) => (
-    <Link to={`/product/${item.productId}`} className="image-gallery-item">
-      <div
-        className="image-wrapper mx-auto"
-        style={{ width: "300px", height: "400px" }}
-      >
-        <img
-          src={item.original}
-          alt={item.originalAlt}
-          title={item.originalTitle}
-          className="image-gallery-image"
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
-      </div>
-      <div className="image-gallery-description">{item.description}</div>
-    </Link>
-  );
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
 
   return (
-    <div className="best-sellers-gallery">
-      <ImageGallery
-        items={images}
-        showBullets={true}
-        lazyLoad={true}
-        autoPlay={true}
-        renderItem={renderItem}
-      />
-    </div>
+    <Slider {...settings} className="max-w-4xl mx-auto">
+      {products.map((product) => (
+        <Link key={product.id} to={`/product/${product.id}`} className="p-4">
+          <motion.div
+            className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
+            whileHover={{ scale: 1.05 }}
+          >
+            <img
+              src={product.image}
+              alt={product.title}
+              className="h-64 w-full object-cover rounded-t-lg mb-4"
+            />
+            <h3 className="text-xl font-bold mb-2">
+              {truncateTitle(product.title)}
+            </h3>
+            <p className="text-lg text-gray-700">${product.price}</p>
+          </motion.div>
+        </Link>
+      ))}
+    </Slider>
   );
 }
 
