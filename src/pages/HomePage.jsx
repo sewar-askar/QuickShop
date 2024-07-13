@@ -11,6 +11,27 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import truncateTitle from "../utils/truncateTitle";
 
+const testimonials = [
+  {
+    photo: "https://img.icons8.com/?size=256&id=7821&format=png",
+    name: "John Doe",
+    rating: 5,
+    quote: "Great product! Highly recommend!",
+  },
+  {
+    photo: "https://img.icons8.com/?size=256&id=23239&format=png",
+    name: "Jane Smith",
+    rating: 5,
+    quote: "Excellent service and quality.",
+  },
+  {
+    photo: "https://img.icons8.com/?size=256&id=20751&format=png",
+    name: "Alice Johnson",
+    rating: 5,
+    quote: "Will buy again. Very satisfied!",
+  },
+];
+
 function HomePage() {
   const { t } = useTranslation();
   return (
@@ -37,6 +58,25 @@ function HomePage() {
       <div className="mt-12">
         <h2 className="text-3xl font-bold mb-4">{t("best_sellers")}</h2>
         <BestSellers />
+      </div>
+      <div className="relative h-12 mt-12">
+        <div className="absolute bottom-0 left-0 right-0 h-4 bg-gray-200"></div>
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg
+            className="w-full h-4"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1440 48"
+            preserveAspectRatio="none"
+          >
+            <path
+              fill="#fff"
+              d="M0,48 L48,36 L96,48 L144,36 L192,48 L240,36 L288,48 L336,36 L384,48 L432,36 L480,48 L528,36 L576,48 L624,36 L672,48 L720,36 L768,48 L816,36 L864,48 L912,36 L960,48 L1008,36 L1056,48 L1104,36 L1152,48 L1200,36 L1248,48 L1296,36 L1344,48 L1392,36 L1440,48 L1440,0 L0,0 Z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+      <div className="bg-gray-200 pt-12">
+        <TestimonialsSection />
       </div>
     </motion.div>
   );
@@ -118,5 +158,70 @@ function BestSellers() {
     </Slider>
   );
 }
+
+const TestimonialsSection = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
+  return (
+    <>
+      <div className="bg-white py-16">
+        <h2 className="text-4xl font-extrabold text-center mb-12 text-gray-800">
+          What Our Clients Say
+        </h2>
+        <div className="container mx-auto px-4">
+          <Slider {...settings}>
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={index}
+                className="p-4"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="bg-white rounded-xl shadow-md p-8 max-w-2xl mx-auto transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                  <div className="flex items-center mb-6">
+                    <img
+                      src={testimonial.photo}
+                      alt={testimonial.name}
+                      className="w-16 h-16 rounded-full mr-4 border-2 border-teal-500"
+                    />
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-800">
+                        {testimonial.name}
+                      </h3>
+                      <div className="flex text-teal-500">
+                        {Array(testimonial.rating)
+                          .fill()
+                          .map((_, i) => (
+                            <svg
+                              key={i}
+                              className="w-5 h-5"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-gray-600 text-lg italic">
+                    {testimonial.quote}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </Slider>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default HomePage;
