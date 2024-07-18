@@ -15,6 +15,7 @@ function ProductDetailsPage() {
   const { id } = useParams();
   const { setCart } = useContext(CartContext);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -22,10 +23,17 @@ function ProductDetailsPage() {
         const response = await axios.get(
           `https://fakestoreapi.com/products/${id}`
         );
-        setProduct(response.data);
+        // Simulate sale data (remove this when backend provides actual sale data)
+        const simulatedSaleData = {
+          ...response.data,
+          isOnSale: true,
+          salePrice: (response.data.price * 0.8).toFixed(2),
+        };
+        setProduct(simulatedSaleData);
         setLoading(false);
       } catch (error) {
-        toast.error("Failed to fetch product details.");
+        console.error("Failed to fetch product details:", error);
+        setError("Failed to fetch product details. Please try again later.");
         setLoading(false);
       }
     };
@@ -36,6 +44,14 @@ function ProductDetailsPage() {
     return (
       <div className="flex justify-center items-center h-screen">
         <ClipLoader color="#4B5563" size={60} />
+      </div>
+    );
+  }
+
+  if (error || !product) {
+    return (
+      <div className="flex justify-center items-center h-screen text-red-500">
+        {error || "Product not found"}
       </div>
     );
   }
@@ -56,7 +72,7 @@ function ProductDetailsPage() {
       "@type": "Offer",
       url: `https://yourwebsite.com/product/${product.id}`,
       priceCurrency: "USD",
-      price: product.price,
+      price: product.isOnSale ? product.salePrice : product.price,
       availability: "https://schema.org/InStock",
     },
   };
@@ -80,7 +96,12 @@ function ProductDetailsPage() {
       </Helmet>
       <div className="bg-white shadow-xl rounded-lg overflow-hidden">
         <div className="md:flex">
-          <div className="md:flex-shrink-0 bg-gray-100 p-8 flex items-center justify-center">
+          <div className="md:flex-shrink-0 bg-gray-100 p-8 flex items-center justify-center relative">
+            {product.isOnSale && (
+              <div className="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                Sale
+              </div>
+            )}
             <motion.img
               src={product.image}
               alt={product.title}
@@ -101,15 +122,29 @@ function ProductDetailsPage() {
               {product.title}
             </motion.h2>
             <motion.div
-              className="flex items-center mb-4"
+              className="flex flex-wrap items-center mb-4"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
-              <span className="text-3xl font-bold text-indigo-600">
-                ${product.price.toFixed(2)}
-              </span>
-              <div className="ml-4 flex items-center">
+              {product.isOnSale ? (
+                <div className="flex items-baseline w-full sm:w-auto mb-2 sm:mb-0">
+                  <span className="text-green-600 font-bold mr-2 text-3xl">
+                    New
+                  </span>
+                  <span className="text-3xl font-bold text-green-600 mr-2">
+                    ${product.salePrice}
+                  </span>
+                  <span className="text-xl text-gray-500 line-through">
+                    ${product.price.toFixed(2)}
+                  </span>
+                </div>
+              ) : (
+                <span className="text-3xl font-bold text-indigo-600 w-full sm:w-auto">
+                  ${product.price.toFixed(2)}
+                </span>
+              )}
+              <div className="ml-0 sm:ml-4 flex items-center w-full sm:w-auto mt-2 sm:mt-0">
                 {[...Array(5)].map((_, i) => (
                   <FaStar key={i} className="text-yellow-400 mr-1" />
                 ))}
@@ -125,7 +160,7 @@ function ProductDetailsPage() {
               {product.description}
             </motion.p>
             <motion.button
-              className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center w-full md:w-auto"
+              className="bg-black border border-black text-white px-6 py-3 rounded-lg hover:bg-white hover:text-black transition duration-300 flex items-center justify-center w-full sm:w-auto"
               onClick={addToCart}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
