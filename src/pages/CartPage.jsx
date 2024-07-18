@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
 import { FaShoppingCart, FaTimes, FaChevronRight } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 function CartPage() {
   const { t } = useTranslation();
@@ -27,7 +28,7 @@ function CartPage() {
 
   return (
     <motion.div
-      className="container mx-auto px-4 sm:px-6 lg:px-8 py-12"
+      className="container mx-auto px-4 sm:px-6 lg:px-8 py-4"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -46,14 +47,25 @@ function CartPage() {
       </div>
 
       {cart.length === 0 ? (
-        <motion.p
-          className="text-xl text-gray-600 text-center py-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          {t("empty_cart")}
-        </motion.p>
+        <div className="text-center py-4">
+          <motion.p
+            className="text-xl text-gray-600"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            {t("empty_cart")}
+          </motion.p>
+          <motion.img
+            src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-7359557-6024626.png"
+            alt="Empty Cart"
+            className="mx-auto mt-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            style={{ maxWidth: "300px" }}
+          />
+        </div>
       ) : (
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="divide-y divide-gray-200">

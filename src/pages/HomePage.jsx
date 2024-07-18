@@ -35,12 +35,7 @@ const testimonials = [
 function HomePage() {
   const { t } = useTranslation();
   return (
-    <motion.div
-      className="container mx-auto px-16 mt-12 text-center"
-      initial={{ opacity: 0, y: -50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1 }}
-    >
+    <motion.div>
       <Helmet>
         <title>QuickShop - {t("home")}</title>
         <meta
@@ -48,13 +43,7 @@ function HomePage() {
           content="Discover amazing products at great prices on QuickShop's!"
         />
       </Helmet>
-      <h1 className="text-5xl font-bold mb-6">{t("welcome")}</h1>
-      <p className="text-xl mb-8">{t("discover")}</p>
-      <Link to="/products">
-        <button className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-blue-700">
-          {t("shop_now")}
-        </button>
-      </Link>
+      <HeroSection />
       <div className="mt-12">
         <h2 className="text-3xl font-bold mb-4">{t("best_sellers")}</h2>
         <BestSellers />
@@ -81,6 +70,37 @@ function HomePage() {
     </motion.div>
   );
 }
+const HeroSection = () => {
+  return (
+    <section className="relative h-screen bg-gray-800">
+      <div className="absolute inset-0">
+        <img
+          src="https://photo-cdn2.icons8.com/aUflnxbNuNHAYv_-dX4VpwBb7TgBiiTJCvtnfcDCsMs/rs:fit:1608:1072/czM6Ly9pY29uczgu/bW9vc2UtcHJvZC5h/c3NldHMvYXNzZXRz/L3NhdGEvb3JpZ2lu/YWwvOTU4LzNmOWVk/MWZiLWFhZTUtNGFk/My04ZjQwLTBjNjIw/MmU5ZDU5ZC5qcGc.jpg"
+          alt="New Arrival"
+          className="w-full h-full object-cover"
+          style={{ opacity: 0.6 }}
+        />
+      </div>
+      <div className="relative container mx-auto h-full flex justify-center items-center">
+        <motion.div
+          className="text-center text-white"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <h1 className="text-5xl font-bold mb-6">
+            Discover Our Latest Collection
+          </h1>
+          <Link to="/products">
+            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-blue-700">
+              Shop Now
+            </button>
+          </Link>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
 
 function BestSellers() {
   const { t } = useTranslation();
