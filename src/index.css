@@ -10,7 +10,10 @@
   margin-bottom: 20px;
 }
 
-
+body,
+html {
+  overflow-x: hidden;
+}
 
 .image-gallery-description {
   margin-top: 10px;
@@ -18,4 +21,3 @@
   color: #333;
   text-align: center;
 }
-

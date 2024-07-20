@@ -10,6 +10,7 @@ import { Helmet } from "react-helmet";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import truncateTitle from "../utils/truncateTitle";
+import DiscountModal from "../components/DiscountModal ";
 
 const testimonials = [
   {
@@ -43,9 +44,12 @@ function HomePage() {
           content="Discover amazing products at great prices on QuickShop's!"
         />
       </Helmet>
-      <HeroSection />
+      <DiscountModal />
+      <HeroSection t={t} />
       <div className="mt-12">
-        <h2 className="text-3xl font-bold mb-4">{t("best_sellers")}</h2>
+        <h2 className="text-4xl font-extrabold text-center mb-12 text-gray-800">
+          {t("best_sellers")}
+        </h2>
         <BestSellers />
       </div>
       <div className="relative h-12 mt-12">
@@ -70,33 +74,31 @@ function HomePage() {
     </motion.div>
   );
 }
-const HeroSection = () => {
+
+const HeroSection = ({ t }) => {
   return (
-    <section className="relative h-screen bg-gray-800">
-      <div className="absolute inset-0">
+    <section className="flex h-screen bg-white flex-col md:flex-row">
+      <div className="md:w-1/2 w-full flex justify-center items-center p-10">
+        <motion.div
+          className="text-left text-black"
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <h1 className="text-5xl font-bold mb-6">{t("discover")}</h1>
+          <a href="/products" className=" flex justify-center items-center">
+            <button className="bg-black text-white px-8 py-3 rounded-lg text-lg border border-black hover:bg-white hover:text-black">
+              {t("shop_now")}
+            </button>
+          </a>
+        </motion.div>
+      </div>
+      <div className="md:w-1/2 w-full relative">
         <img
           src="https://photo-cdn2.icons8.com/aUflnxbNuNHAYv_-dX4VpwBb7TgBiiTJCvtnfcDCsMs/rs:fit:1608:1072/czM6Ly9pY29uczgu/bW9vc2UtcHJvZC5h/c3NldHMvYXNzZXRz/L3NhdGEvb3JpZ2lu/YWwvOTU4LzNmOWVk/MWZiLWFhZTUtNGFk/My04ZjQwLTBjNjIw/MmU5ZDU5ZC5qcGc.jpg"
           alt="New Arrival"
           className="w-full h-full object-cover"
-          style={{ opacity: 0.6 }}
         />
-      </div>
-      <div className="relative container mx-auto h-full flex justify-center items-center">
-        <motion.div
-          className="text-center text-white"
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <h1 className="text-5xl font-bold mb-6">
-            Discover Our Latest Collection
-          </h1>
-          <Link to="/products">
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-blue-700">
-              Shop Now
-            </button>
-          </Link>
-        </motion.div>
       </div>
     </section>
   );
