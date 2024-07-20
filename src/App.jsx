@@ -27,7 +27,7 @@ function App() {
 
   return (
     <CartProvider>
-      <div className="container mx-auto min-h-screen bg-white text-black">
+      <div className="w-full  bg-white text-black">
         <Helmet>
           <title>QuickShop</title>
           <meta

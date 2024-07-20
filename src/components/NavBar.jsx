@@ -35,7 +35,7 @@ function NavBar({ changeLanguage }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className="bg-white text-black border-b-2 border-gray-200 p-4 shadow-sm"
+      className="bg-white container px-12 text-black border-b-2 border-gray-200 p-4 shadow-sm"
       aria-label="Main Navigation"
     >
       <div className="container mx-auto flex justify-between items-center">

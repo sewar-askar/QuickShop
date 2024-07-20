@@ -55,7 +55,7 @@ const faqData = [
 function HomePage() {
   const { t } = useTranslation();
   return (
-    <motion.div>
+    <motion.div className=" w-full">
       <Helmet>
         <title>QuickShop - {t("home")}</title>
         <meta
@@ -98,7 +98,7 @@ function HomePage() {
 
 const HeroSection = ({ t }) => {
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className=" w-full relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
       <img
         src="https://scontent.fcai22-2.fna.fbcdn.net/v/t1.6435-9/135607471_189812262850719_2919503723434041457_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=06a7ca&_nc_ohc=ZdwSPDdtq7EQ7kNvgFhhNuJ&_nc_ht=scontent.fcai22-2.fna&oh=00_AYDtM3LgXJhO2batZ7RTGInxop4iFnwHlAVTpDjLXnzAeg&oe=66C3A85F"
