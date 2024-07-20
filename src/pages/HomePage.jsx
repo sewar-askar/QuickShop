@@ -11,6 +11,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import truncateTitle from "../utils/truncateTitle";
 import DiscountModal from "../components/DiscountModal ";
+import FAQSection from "../components/FAQSection";
 
 const testimonials = [
   {
@@ -30,6 +31,24 @@ const testimonials = [
     name: "Alice Johnson",
     rating: 5,
     quote: "Will buy again. Very satisfied!",
+  },
+];
+
+const faqData = [
+  {
+    question: "What is your return policy?",
+    answer:
+      "Our return policy lasts 30 days. If 30 days have gone by since your purchase, unfortunately, we can’t offer you a refund or exchange.",
+  },
+  {
+    question: "How do I track my order?",
+    answer:
+      "You can track your order using the tracking number provided in your order confirmation email.",
+  },
+  {
+    question: "Do you ship internationally?",
+    answer:
+      "Yes, we ship worldwide. Shipping charges and times vary depending on your location.",
   },
 ];
 
@@ -53,7 +72,6 @@ function HomePage() {
         <BestSellers />
       </div>
       <div className="relative h-12 mt-12">
-        <div className="absolute bottom-0 left-0 right-0 h-4 bg-gray-200"></div>
         <div className="absolute bottom-0 left-0 right-0">
           <svg
             className="w-full h-4"
@@ -71,35 +89,37 @@ function HomePage() {
       <div className="bg-gray-200 pt-12">
         <TestimonialsSection />
       </div>
+      <div className="bg-gray-200 pt-12">
+        <FAQSection faqData={faqData} />
+      </div>
     </motion.div>
   );
 }
 
 const HeroSection = ({ t }) => {
   return (
-    <section className="flex h-screen bg-white flex-col md:flex-row">
-      <div className="md:w-1/2 w-full flex justify-center items-center p-10">
-        <motion.div
-          className="text-left text-black"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <h1 className="text-5xl font-bold mb-6">{t("discover")}</h1>
-          <a href="/products" className=" flex justify-center items-center">
-            <button className="bg-black text-white px-8 py-3 rounded-lg text-lg border border-black hover:bg-white hover:text-black">
-              {t("shop_now")}
-            </button>
-          </a>
-        </motion.div>
-      </div>
-      <div className="md:w-1/2 w-full relative">
-        <img
-          src="https://photo-cdn2.icons8.com/aUflnxbNuNHAYv_-dX4VpwBb7TgBiiTJCvtnfcDCsMs/rs:fit:1608:1072/czM6Ly9pY29uczgu/bW9vc2UtcHJvZC5h/c3NldHMvYXNzZXRz/L3NhdGEvb3JpZ2lu/YWwvOTU4LzNmOWVk/MWZiLWFhZTUtNGFk/My04ZjQwLTBjNjIw/MmU5ZDU5ZC5qcGc.jpg"
-          alt="New Arrival"
-          className="w-full h-full object-cover"
-        />
-      </div>
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
+      <img
+        src="https://scontent.fcai22-2.fna.fbcdn.net/v/t1.6435-9/135607471_189812262850719_2919503723434041457_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=06a7ca&_nc_ohc=ZdwSPDdtq7EQ7kNvgFhhNuJ&_nc_ht=scontent.fcai22-2.fna&oh=00_AYDtM3LgXJhO2batZ7RTGInxop4iFnwHlAVTpDjLXnzAeg&oe=66C3A85F"
+        alt="Background"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <motion.div
+        className="relative z-20 text-center text-white max-w-4xl px-6 md:px-12 lg:px-24"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 md:mb-6 lg:mb-8">
+          {t("discover")}
+        </h1>
+        <a href="/products" className="inline-block">
+          <button className="bg-white text-black px-6 py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 rounded-full text-sm md:text-lg font-semibold hover:bg-gray-200 transition duration-300">
+            {t("shop_now")}
+          </button>
+        </a>
+      </motion.div>
     </section>
   );
 };
