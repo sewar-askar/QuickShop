@@ -47,10 +47,10 @@ const CheckoutPage = () => {
 
     emailjs
       .send(
-        "service_f8d389m",
-        "template_36vixgk",
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         emailParams,
-        "sqskX9oY37nhtjTY9"
+        import.meta.env.VITE_EMAILJS_USER_ID
       )
       .then((response) => {
         setSubmitting(false);
@@ -80,7 +80,7 @@ const CheckoutPage = () => {
   return (
     <div className="container mx-auto p-4 sm:p-6 lg:p-8">
       <ProgressBar currentStep={2} />
-      <div className="bg-white  p-6">
+      <div className="bg-white p-6">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">
           {t("checkout")}
         </h2>
