@@ -10,11 +10,11 @@ import { CartProvider } from "./context/CartContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Router>
-      <CartProvider>
+    <CartProvider>
+      <Router>
         <App />
-      </CartProvider>
-    </Router>
+      </Router>
+    </CartProvider>
     <ToastContainer />
   </React.StrictMode>
 );

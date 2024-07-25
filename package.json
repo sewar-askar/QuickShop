@@ -13,14 +13,16 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@heroicons/react": "^2.1.4",
+    "@heroicons/react": "^2.1.5",
     "axios": "^1.7.2",
+    "emailjs-com": "^3.2.0",
     "formik": "^2.4.6",
     "framer-motion": "^11.2.14",
     "i18next": "^23.11.5",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-http-backend": "^2.5.2",
     "js-cookie": "^3.0.5",
+    "lucide-react": "^0.416.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
@@ -50,7 +52,7 @@
     "tailwindcss": "^3.4.4",
     "vite": "^5.3.1",
     "vite-plugin-compression": "^0.5.1",
-    "vite-plugin-imagemin": "^0.5.3",
+    "vite-plugin-imagemin": "^0.4.6",
     "vite-plugin-pwa": "^0.20.0"
   }
 }

@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
 import { FaShoppingCart, FaTimes, FaChevronRight } from "react-icons/fa";
 import { toast } from "react-toastify";
+import ProgressBar from "../components/ProgressBar";
 
 function CartPage() {
   const { t } = useTranslation();
@@ -40,6 +41,8 @@ function CartPage() {
           content="Review your cart items and proceed to checkout."
         />
       </Helmet>
+
+      <ProgressBar currentStep={1} />
 
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-3xl font-bold text-gray-900">{t("your_cart")}</h2>
